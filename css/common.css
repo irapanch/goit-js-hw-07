@@ -21,48 +21,4 @@ input {
 button {
   padding: 8px 12px;
   cursor: pointer;
-  
-}
-
-ul {
-  margin-top: 0;
-  margin-bottom: 0;
-  padding: 0;
-}
-
-h1,
-h2,
-h3,
-p {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-li {
-  list-style: none;
-}
-
-img {
-max-width: 100%;
-}
-.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 72px;
-
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-top: 20px;
-}
-
-#validation-input {
-  border: 3px solid #bdbdbd;
-}
-
-#validation-input.valid {
-  border-color: #4caf50;
-}
-
-#validation-input.invalid {
-  border-color: #f44336;
 }
