@@ -2,78 +2,50 @@ import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
 
-const list = document.querySelector('.gallery');
 
-list.addEventListener('click', onClick);
 
-document.addEventListener('keydown', onEscape);
+console.log(galleryItems); // вивели галерею із зображеннями  в консоль
 
-const gallery = galleryItems
-  .map(
+
+const galleryList = document.querySelector('.gallery'); // отримали посилання на ul class="gallery"
+
+galleryList.addEventListener('click', onClick); // додали прослуховувач подій на список  ul
+
+document.addEventListener('keydown', onKeyEscape); // додали прослуховувач, що реєструє подію, яка спрацьовує, коли користувач натискає Escape на клавіатурі
+
+
+
+const gallery = galleryItems // створюємо змінну, що містить галерею зображень
+  .map(        // перебираємо кожний елемент галереї і створюємо рядок з розміткою <li> для кожного елемента галереї
     item =>
-      `<li class="gallery__item"><a class="gallery__link" href="#"><img class="gallery__image" src="${item.preview}"  data-source="${item.original}" alt="${item.description}"></a></li>`
+      `<li class="gallery__item"><a class="gallery__link" href="${item.original}"><img class="gallery__image" src="${item.preview}"  data-source="${item.original}" alt="${item.description}"></a></li>` // додаємо зображення і атрибути до кожного елемента 
   )
-  .join('');
+  .join(''); // об'єднуємо всі рядки в один рядок
 
-list.insertAdjacentHTML('beforeend', gallery);
+galleryList.insertAdjacentHTML('beforeend', gallery); // додаємо список з li до нашого ul
 
-let instance;
+let instance; // змінна модального вікна
 
-function onClick(event) {
-  if (!event.target.classList.contains('gallery__image')) {
-    return;
-  }
-
-  instance = basicLightbox.create(
+function onClick(event) {  // функція виконується, коли користувач клікає на елемент галереї зображень
+   event.preventDefault(); // скидаємо дефолтні налаштування(завантаження зображення при кліку на нього)
+  if (!event.target.classList.contains('gallery__image')) { 
+    return; // перевіряємо чи клік дійсно по картинці з галереї
+  } instance = basicLightbox.create(    
     ` <img src="${event.target.dataset.source}" alt="${event.target.alt}">`
-  );
+  ); // якщо елемент, на який користувач натиснув, має клас "gallery__image"створюємо модальне вікно  з великим зображенням (Заміна значення атрибута src елемента <img>)
 
-  instance.show();
+  instance.show(); // показуємо модальне вікно
 }
 
-function onEscape(event) {
+function onKeyEscape(event) { // функція перевіряє, чи код клавіші є "Escape" 
   if (event.code === 'Escape') {
-    instance.close();
+    instance.close();  // закриває вікно "instance", якщо це так
+    document.removeEventListener("keydown", onKeyEscape); // видаляємо прослуховувача подій
   }
 }
+
+
 // =============================================
-
-// console.log(galleryItems);
-
-// const list = document.querySelector('.gallery'); // отримали посилання на ul class="gallery"
-
-// list.addEventListener('click', onClick); // додали прослуховувач подій на список  ul
-
-// document.addEventListener('keydown', onEscape); // додали прослуховувач, що реєструє подію, яка спрацьовує, коли користувач натискає Escape на клавіатурі
-
-// const gallery = galleryItems // створюємо змінну, що містить галерею зображень
-//   .map(        // перебираємо кожний елемент галереї і створюємо рядок з розміткою <li> для кожного елемента галереї
-//     item =>
-//       `<li class="gallery__item"><a class="gallery__link" href="#"><img class="gallery__image" src="${item.preview}"  data-source="${item.original}" alt="${item.description}"></a></li>` // додаємо зображення і атрибути до кожного елемента 
-//   )
-//   .join(''); // об'єднуємо всі рядки в одну стрічку
-
-// list.insertAdjacentHTML('beforeend', gallery); // додаємо список з li до нашого ul
-
-// let instance;
-
-// function onClick(event) {
-//   if (!event.target.classList.contains('gallery__image')) {
-//     return;
-//   }
-
-//   instance = basicLightbox.create(
-//     ` <img src="${event.target.dataset.source}" alt="${event.target.alt}">`
-//   );
-
-//   instance.show();
-// }
-
-// function onEscape(event) {
-//   if (event.code === 'Escape') {
-//     instance.close();
-//   }
-// }
 
 // Створи галерею з можливістю кліку по її елементах і перегляду повнорозмірного зображення у модальному вікні. Подивися демо відео роботи галереї.
 
